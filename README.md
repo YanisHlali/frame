@@ -1,4 +1,4 @@
-# 🎞️ Frame – Every Frame In Order
+# 🎞️ Every Frame In Order
 
 > 🧪 Online demo: [@TwinPeaksShot](https://x.com/TwinPeaksShot)
 
@@ -39,7 +39,7 @@ npm run extract:series       # For TV series
 npm run extract:movies       # For movies
 ```
 
-> 💡 Each image must be named in a consistent format (e.g., `frame_000001.jpg`).
+> 💡 Each image must be named in a consistent format (e.g., `frame_0001.jpg`).
 
 ### 3. Upload to Google Drive
 
