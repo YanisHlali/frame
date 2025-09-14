@@ -1,0 +1,77 @@
+2025-09-03T13:30:06.691Z - ERROR: Cannot find module './dist/scheduler/index'
+Require stack:
+- /home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js
+Error: Cannot find module './dist/scheduler/index'
+Require stack:
+- /home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1212:15)
+    at Hook._require.Module.require (/usr/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+    at require (node:internal/modules/helpers:182:18)
+    at runScheduler (/home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js:43:40)
+    at Object.<anonymous> (/home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js:64:3)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Object.<anonymous> (/usr/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+
+2025-09-03T13:40:00.134Z - ERROR: Cannot find module './dist/scheduler/index'
+Require stack:
+- /home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js
+Error: Cannot find module './dist/scheduler/index'
+Require stack:
+- /home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1212:15)
+    at Hook._require.Module.require (/usr/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+    at require (node:internal/modules/helpers:182:18)
+    at runScheduler (/home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js:43:40)
+    at Object.<anonymous> (/home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js:64:3)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Object.<anonymous> (/usr/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+
+2025-09-03T13:50:00.114Z - ERROR: Cannot find module './dist/scheduler/index'
+Require stack:
+- /home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js
+Error: Cannot find module './dist/scheduler/index'
+Require stack:
+- /home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1212:15)
+    at Hook._require.Module.require (/usr/lib/node_modules/pm2/node_modules/require-in-the-middle/index.js:81:25)
+    at require (node:internal/modules/helpers:182:18)
+    at runScheduler (/home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js:43:40)
+    at Object.<anonymous> (/home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js:64:3)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Object.<anonymous> (/usr/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+
+2025-09-13T10:30:00.123Z - ERROR: Missing required environment variables: CONTENT_ID
+Error: Missing required environment variables: CONTENT_ID
+    at runScheduler (/home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js:33:13)
+    at Object.<anonymous> (/home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js:58:3)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Object.<anonymous> (/usr/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+
+2025-09-13T10:40:00.112Z - ERROR: Missing required environment variables: CONTENT_ID
+Error: Missing required environment variables: CONTENT_ID
+    at runScheduler (/home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js:33:13)
+    at Object.<anonymous> (/home/ubuntu/twin-peaks-frame-bot/scripts/deploy/scheduler-vps.js:58:3)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Object.<anonymous> (/usr/lib/node_modules/pm2/lib/ProcessContainerFork.js:33:23)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+
