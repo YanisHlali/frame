@@ -1,57 +1,57 @@
-# 🎞️ Frame – Every Frame In Order [DEV]
+# 🎞️ Frame – Every Frame In Order
 
-> 🧪 Démo en ligne : [@TwinPeaksShot](https://x.com/TwinPeaksShot)
+> 🧪 Online demo: [@TwinPeaksShot](https://x.com/TwinPeaksShot)
 
-Ce projet automatise l'extraction, la publication et le suivi de chaque frame d'un épisode vidéo, image par image, sur Twitter. Il est conçu pour être utilisé avec **n'importe quelle série** ou contenu vidéo, en adaptant les métadonnées et le contenu de la base de données. Le répertoire actuel est configuré pour une série spécifique, mais le système est générique.
+This project automates the extraction, posting, and tracking of every frame of a video episode, image by image, on Twitter. It is designed to be used with **any series** or video content by adapting the metadata and database content. The current directory is configured for a specific series, but the system is generic.
 
-Il combine Puppeteer, Firebase, Google Drive et Twitter (via cookies) pour orchestrer l'ensemble du processus.
+It combines Puppeteer, Firebase, Google Drive, and Twitter (via cookies) to orchestrate the entire process.
 
-## ⚙️ Fonctionnalités
+## ⚙️ Features
 
-* **Extraction des frames** d'un épisode vidéo avec support des séries et films.
-* **Interface Web interactive** pour visualiser et parcourir les frames :
-  - 🖼️ **FrameViewer** avec Next.js Image pour un chargement optimisé
-  - 📊 **Tableau de bord statistiques** avec métriques détaillées
-  - 🌐 **Support multilingue** (i18next)
-  - 🌙 **Mode sombre/clair** avec ThemeToggle
-* **Upload sur Google Drive** avec organisation par épisode et intégration API.
-* **Stockage des métadonnées** (frames, timestamps, liens) dans Firebase Firestore.
-* **Publication automatique et planifiée** des frames sur Twitter via une API custom.
-* **Import d'épisodes et films** via templates JSON configurables.
-* **Gestion avancée de la pagination** avec chargement optimisé.
-* **Système de proxy d'images** pour améliorer les performances.
-* **Déploiement flexible** (Vercel, VPS avec PM2).
+* **Frame extraction** from a video episode with support for series and movies.
+* **Interactive web interface** to view and browse frames:
+  - 🖼️ **FrameViewer** with Next.js Image for optimized loading
+  - 📊 **Statistics dashboard** with detailed metrics
+  - 🌐 **Multilingual support** (i18next)
+  - 🌙 **Dark/Light mode** with ThemeToggle
+* **Upload to Google Drive** with organization by episode and API integration.
+* **Metadata storage** (frames, timestamps, links) in Firebase Firestore.
+* **Automatic and scheduled posting** of frames on Twitter via a custom API.
+* **Import episodes and movies** via configurable JSON templates.
+* **Advanced pagination management** with optimized loading.
+* **Image proxy system** to improve performance.
+* **Flexible deployment** (Vercel, VPS with PM2).
 
 ---
 
-## 🚀 Étapes d’installation & d’utilisation
+## 🚀 Installation & Usage Steps
 
-### 1. Récupérer l’épisode
+### 1. Get the episode
 
-Télécharge le fichier vidéo de l’épisode à traiter.
+Download the video file of the episode to process.
 
-### 2. Extraire les frames
+### 2. Extract frames
 
-Utilise les scripts d'extraction pour extraire chaque image de l'épisode en format `.jpg` ou `.png`.
+Use the extraction scripts to extract each image of the episode in `.jpg` or `.png` format.
 
 ```bash
-npm run extract:series       # Pour les séries TV
-npm run extract:movies       # Pour les films
+npm run extract:series       # For TV series
+npm run extract:movies       # For movies
 ```
 
-> 💡 Chaque image doit être nommée dans un format cohérent (ex: `frame_000001.jpg`).
+> 💡 Each image must be named in a consistent format (e.g., `frame_000001.jpg`).
 
-### 3. Upload vers Google Drive
+### 3. Upload to Google Drive
 
-Les images doivent être uploadées sur un dossier Google Drive spécifique au projet. Le script utilise l’API Google Drive pour gérer les uploads et récupérer les URLs publiques.
+Images must be uploaded to a specific Google Drive folder for the project. The script uses the Google Drive API to manage uploads and retrieve public URLs.
 
-#### 🗃️ Schéma d'organisation des frames sur Drive
+#### 🗃️ Frame organization schema on Drive
 
 ```
 Drive root
 └── Twin Peaks
-    └── Twin_Peaks_S01E01                      # Dossier principal de l’épisode
-        ├── Twin_Peaks_S01_E01_1               # Dossier découpé contenant 100 frames
+    └── Twin_Peaks_S01E01                      # Main folder for the episode
+        ├── Twin_Peaks_S01_E01_1               # Subfolder containing 100 frames
         │   ├── frame_0001.png
         │   └── ...
         └── Twin_Peaks_S01_E01_2
@@ -59,42 +59,42 @@ Drive root
             └── ...
 ```
 
-> 📂 Chaque sous-dossier correspond à un `folderId` référencé dans Firestore.
+> 📂 Each subfolder corresponds to a `folderId` referenced in Firestore.
 
-### 4. Configurer Firebase
+### 4. Configure Firebase
 
-Crée une base de données Firestore sur [Firebase Console](https://console.firebase.google.com/), puis :
+Create a Firestore database on [Firebase Console](https://console.firebase.google.com/), then:
 
-* Crée une collection `series` contenant les données.
-* Fournis un **Service Account JSON** encodé en base64.
+* Create a `series` collection containing the data.
+* Provide a **Service Account JSON** encoded in base64.
 
-#### 📁 Schéma de la base Firestore
+#### 📁 Firestore database schema
 
 ```
 [series-id] (document)
-├── title: string                         # Titre de la série
-├── current: number                       # Index du contenu actuellement publié
-├── order: array<string>                  # Ordre de publication des contenus
+├── title: string                         # Series title
+├── current: number                       # Index of the currently published content
+├── order: array<string>                  # Publication order of contents
 └── items: {
      [content-id]: {
-       // Pour les films
+       // For movies
        type: "movie",
        title: string,
        year: number,
-       folderIds: array<string>,          # Dossiers Drive contenant les frames
+       folderIds: array<string>,          # Drive folders containing frames
        totalFiles: number,
        lastIndex: number,
        indexFolder: number
        
-       // Pour les saisons
+       // For seasons
        type: "season",
        title: string,
        seasonNumber: number,
-       current: { episodeId: string },    # Épisode actuellement publié
+       current: { episodeId: string },    # Currently published episode
        episodes: {
          [episode-id]: {
            episodeNumber: number,
-           folderIds: array<string>,      # Dossiers Drive contenant les frames
+           folderIds: array<string>,      # Drive folders containing frames
            totalFiles: number,
            lastIndex: number,
            indexFolder: number
@@ -104,12 +104,12 @@ Crée une base de données Firestore sur [Firebase Console](https://console.fire
    }
 ```
 
-> 🔹 Le champ `current` (numérique) permet de suivre l'index dans l'`order` du contenu en cours de publication.  
-> 🔹 Pour les saisons, un sous-champ `current.episodeId` indique l'épisode actuellement publié.
+> 🔹 The `current` field (numeric) tracks the index in the `order` of the content being published.  
+> 🔹 For seasons, a subfield `current.episodeId` indicates the currently published episode.
 
-### 5. Remplir le fichier `.env`
+### 5. Fill in the `.env` file
 
-Crée un fichier `.env` à la racine du projet avec les variables suivantes :
+Create a `.env` file at the root of the project with the following variables:
 
 ```env
 CRON_SECRET=...
@@ -119,25 +119,25 @@ COOKIES_BASE64=...
 CONTENT_ID=your-content-id
 ```
 
-* `CRON_SECRET` : secret partagé pour sécuriser les requêtes cron.
-* `GOOGLE_APPLICATION_CREDENTIALS_BASE64` : identifiants d’accès à l’API Google Drive.
-* `FIREBASE_SERVICE_ACCOUNT_BASE64` : compte de service Firebase encodé.
-* `COOKIES_BASE64` : cookies Twitter exportés au format base64.
-* `CONTENT_ID` : ID du document `content` dans Firestore.
+* `CRON_SECRET`: shared secret to secure cron requests.
+* `GOOGLE_APPLICATION_CREDENTIALS_BASE64`: Google Drive API access credentials.
+* `FIREBASE_SERVICE_ACCOUNT_BASE64`: encoded Firebase service account.
+* `COOKIES_BASE64`: Twitter cookies exported in base64 format.
+* `CONTENT_ID`: ID of the `content` document in Firestore.
 
-> ℹ️ Tu peux utiliser :
+> ℹ️ You can use:
 
 ```bash
-npm run auth:cookies         # Génère cookies.b64 depuis cookies.json  
-npm run auth:setup           # Configure l'environnement d'authentification
+npm run auth:cookies         # Generates cookies.b64 from cookies.json  
+npm run auth:setup           # Sets up the authentication environment
 ```
 
-### 6. Configuration des templates
+### 6. Template configuration
 
-Le système utilise des templates JSON pour importer les métadonnées d'épisodes et de films :
+The system uses JSON templates to import episode and movie metadata:
 
 ```bash
-# Exemple de template d'épisode (episode-template.json)
+# Example episode template (episode-template.json)
 {
   "season": "season-1",
   "episode": 1,
@@ -146,142 +146,142 @@ Le système utilise des templates JSON pour importer les métadonnées d'épisod
 }
 ```
 
-Pour importer :
+To import:
 ```bash
-npm run db:import:episode:template    # Import le template d'épisode
-npm run db:import:movie:template      # Import le template de film
+npm run db:import:episode:template    # Import episode template
+npm run db:import:movie:template      # Import movie template
 ```
 
-### 7. Interface Web
+### 7. Web Interface
 
-Accède à l'interface de visualisation :
-- **Page d'accueil** : Présentation multilingue avec thèmes
-- **Page Twin Peaks** : Interface complète avec :
-  - Vue grille pour parcourir les frames
-  - Vue chronologique pour navigation temporelle  
-  - Tableau de bord avec statistiques détaillées
-  - Recherche et pagination optimisées
+Access the visualization interface:
+- **Home page**: Multilingual presentation with themes
+- **Twin Peaks page**: Full interface with:
+  - Grid view to browse frames
+  - Timeline view for temporal navigation  
+  - Dashboard with detailed statistics
+  - Optimized search and pagination
 
-### 8. Déploiement
+### 8. Deployment
 
-**Option 1 - Vercel (recommandé)** :
+**Option 1 - Vercel (recommended)**:
 ```bash
 vercel deploy
 ```
 
-**Option 2 - VPS avec PM2** :
+**Option 2 - VPS with PM2**:
 ```bash
-npm run deploy:pm2            # Configuration PM2
-npm run deploy:scheduler      # Scheduler de tweets
+npm run deploy:pm2            # PM2 configuration
+npm run deploy:scheduler      # Tweet scheduler
 ```
 
-La publication est désormais gérée via des schedulers externes ou des déploiements VPS avec PM2.
+Publishing is now managed via external schedulers or VPS deployments with PM2.
 
 ---
 
-## 🗓️ Scripts utiles
+## 🗓️ Useful scripts
 
-### 🔧 Développement
+### 🔧 Development
 ```bash
-npm run dev                   # Démarre Next.js en mode développement
-npm run build                 # Build de production
-npm run start                 # Démarre le serveur de production
-npm run lint                  # Vérification du code
+npm run dev                   # Start Next.js in development mode
+npm run build                 # Production build
+npm run start                 # Start production server
+npm run lint                  # Code check
 ```
 
-### 🎬 Extraction de frames
+### 🎬 Frame extraction
 ```bash
-npm run extract:series       # Extraction pour les séries TV
-npm run extract:movies       # Extraction pour les films
+npm run extract:series       # Extraction for TV series
+npm run extract:movies       # Extraction for movies
 ```
 
-### 🗄️ Base de données
+### 🗄️ Database
 ```bash
-npm run db:export             # Exporte la base Firestore
-npm run db:clone              # Clone un document Firestore en test
-npm run db:schema             # Affiche le schéma de la base
-npm run db:import:episode:template    # Import avec template d'épisode
-npm run db:import:movie:template      # Import avec template de film
-npm run db:import:episode     # Import d'épisode personnalisé
-npm run db:import:file        # Import depuis fichier
+npm run db:export             # Export Firestore database
+npm run db:clone              # Clone a Firestore document for testing
+npm run db:schema             # Show database schema
+npm run db:import:episode:template    # Import with episode template
+npm run db:import:movie:template      # Import with movie template
+npm run db:import:episode     # Custom episode import
+npm run db:import:file        # Import from file
 ```
 
-### 🔐 Authentification
+### 🔐 Authentication
 ```bash
-npm run auth:cookies          # Génère cookies.b64 depuis cookies.json
-npm run auth:setup            # Configure l'environnement d'authentification
+npm run auth:cookies          # Generate cookies.b64 from cookies.json
+npm run auth:setup            # Set up authentication environment
 ```
 
-### 🚀 Déploiement
+### 🚀 Deployment
 ```bash
-npm run deploy:pm2            # Déploiement avec PM2
-npm run deploy:server         # Démarre le serveur de production
-npm run deploy:scheduler      # Lance le scheduler sur VPS
+npm run deploy:pm2            # Deploy with PM2
+npm run deploy:server         # Start production server
+npm run deploy:scheduler      # Start scheduler on VPS
 ```
 
 ---
 
-## 📁 Structure du projet
+## 📁 Project structure
 
 ```
 src/
-├── components/       # Composants React
-│   ├── ui/          # Composants UI réutilisables
-│   ├── FrameViewer.tsx       # Visionneuse de frames optimisée
-│   ├── StatsDashboard.tsx    # Tableau de bord statistiques
-│   ├── LanguageSwitcher.tsx  # Sélecteur de langue
-│   └── ThemeToggle.tsx       # Basculeur thème sombre/clair
-├── hooks/            # Hooks React personnalisés
-├── types/            # Définitions TypeScript
-├── config/           # Configurations Firebase & Google
-├── lib/              # Clients Twitter et utilitaires
-├── pages/            # Pages Next.js
-│   ├── api/         # Routes API (tweet, frames, proxy, etc.)
-│   ├── index.tsx    # Page d'accueil multilingue
-│   └── twin-peaks.tsx # Page principale de visualisation
-├── scheduler/        # Scripts de planification
-├── services/         # Logique métier (drive, firestore, tweets, episodes)
-└── utils/            # Scripts manuels (export, cookies)
+├── components/       # React components
+│   ├── ui/          # Reusable UI components
+│   ├── FrameViewer.tsx       # Optimized frame viewer
+│   ├── StatsDashboard.tsx    # Statistics dashboard
+│   ├── LanguageSwitcher.tsx  # Language selector
+│   └── ThemeToggle.tsx       # Dark/Light theme toggle
+├── hooks/            # Custom React hooks
+├── types/            # TypeScript definitions
+├── config/           # Firebase & Google configurations
+├── lib/              # Twitter clients and utilities
+├── pages/            # Next.js pages
+│   ├── api/         # API routes (tweet, frames, proxy, etc.)
+│   ├── index.tsx    # Multilingual home page
+│   └── twin-peaks.tsx # Main visualization page
+├── scheduler/        # Scheduling scripts
+├── services/         # Business logic (drive, firestore, tweets, episodes)
+└── utils/            # Manual scripts (export, cookies)
 
 scripts/
-├── auth/            # Scripts d'authentification
-├── database/        # Scripts de gestion de la base
-├── deploy/          # Scripts de déploiement
-└── extract/         # Scripts d'extraction de frames
+├── auth/            # Authentication scripts
+├── database/        # Database management scripts
+├── deploy/          # Deployment scripts
+└── extract/         # Frame extraction scripts
 
-public/locales/      # Fichiers de traduction i18next
+public/locales/      # i18next translation files
 ```
 
 ---
 
-## 🛠️ Stack technique
+## 🛠️ Tech stack
 
 ### 🖥️ Frontend & UI
-* **Next.js 15** - Framework React avec SSR/SSG
-* **React 18** - Interface utilisateur
-* **TypeScript** - Typage statique
-* **Tailwind CSS** - Styling utilitaire
-* **Lucide React** - Icônes modernes
-* **Class Variance Authority** - Gestion des variantes de composants
+* **Next.js 15** - React framework with SSR/SSG
+* **React 18** - User interface
+* **TypeScript** - Static typing
+* **Tailwind CSS** - Utility-first styling
+* **Lucide React** - Modern icons
+* **Class Variance Authority** - Component variant management
 
-### 🌐 Internationalisation & Thème
-* **i18next** - Gestion multilingue
-* **next-i18next** - Intégration Next.js
-* **react-i18next** - Hooks de traduction
+### 🌐 Internationalization & Theme
+* **i18next** - Multilingual management
+* **next-i18next** - Next.js integration
+* **react-i18next** - Translation hooks
 
-### ☁️ Services Cloud & APIs
-* **Firebase Admin SDK** - Base de données Firestore
-* **Google APIs** - Intégration Google Drive
-* **Twitter (via cookies)** - Publication automatisée
+### ☁️ Cloud Services & APIs
+* **Firebase Admin SDK** - Firestore database
+* **Google APIs** - Google Drive integration
+* **Twitter (via cookies)** - Automated posting
 
-### 🤖 Automatisation & Scraping  
-* **Puppeteer Core** - Contrôle du navigateur
-* **Sparticzu Chromium** - Runtime Chromium optimisé
-* **Cron** - Planification des tâches
+### 🤖 Automation & Scraping  
+* **Puppeteer Core** - Browser control
+* **Sparticzu Chromium** - Optimized Chromium runtime
+* **Cron** - Task scheduling
 
-### 🚀 Déploiement & Infrastructure
-* **Vercel** - Hébergement web
-* **PM2** - Gestionnaire de processus pour VPS
-* **Express** - Serveur HTTP pour déploiement VPS
-* **Axios** - Client HTTP
-* **Dotenv** - Gestion des variables d'environnement
+### 🚀 Deployment & Infrastructure
+* **Vercel** - Web hosting
+* **PM2** - Process manager for VPS
+* **Express** - HTTP server for VPS deployment
+* **Axios** - HTTP client
+* **Dotenv** - Environment variable management
