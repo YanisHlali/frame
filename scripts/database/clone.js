@@ -11,8 +11,16 @@ require("ts-node").register({
 const cloneDocModule = require("./cloneDoc.ts");
 const cloneDoc = cloneDocModule.cloneDoc || cloneDocModule.default;
 const CONTENT_ID = process.env.CONTENT_ID;
+const DEST_ID = process.env.DEST_ID || CONTENT_ID;
 
-cloneDoc(`content/${CONTENT_ID}`, `content/${CONTENT_ID}-test`)
+const baseContentId = CONTENT_ID.endsWith("-test")
+  ? CONTENT_ID.slice(0, -5)
+  : CONTENT_ID;
+
+const srcPath = `content/${baseContentId}`;
+const destPath = `content/${DEST_ID}`;
+
+cloneDoc(srcPath, destPath)
   .then(() => {
     console.log("Cloning completed.");
     process.exit(0);

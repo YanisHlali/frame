@@ -7,24 +7,20 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    
     "extract:series": "bash scripts/extract/extract_frames_series.sh",
     "extract:movies": "bash scripts/extract/extract_frame_movies.sh",
-
     "db:export": "node scripts/database/export.js",
     "db:clone": "node scripts/database/clone.js",
     "db:schema": "node scripts/database/schema.js",
-
     "auth:cookies": "node scripts/auth/cookies.js",
     "auth:setup": "node scripts/auth/setup-env.js",
-
     "deploy:pm2": "pm2 start scripts/deploy/pm2.config.js",
     "deploy:scheduler": "node scripts/deploy/scheduler-vps.js",
-
     "db:import:episode:template": "node scripts/database/import-episode.js episode-template",
     "db:import:movie:template": "node scripts/database/import-episode.js movie-template",
     "db:import:episode": "node scripts/database/import-episode.js",
-    "db:import:file": "node scripts/database/import-episode.js"
+    "db:import:file": "node scripts/database/import-episode.js",
+    "drive:upload-folder": "node scripts/database/upload-folder-to-drive.js"
   },
   "dependencies": {
     "@sparticuz/chromium": "^138.0.2",

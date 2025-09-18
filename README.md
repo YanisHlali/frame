@@ -41,9 +41,34 @@ npm run extract:movies       # For movies
 
 > 💡 Each image must be named in a consistent format (e.g., `frame_0001.jpg`).
 
+
 ### 3. Upload to Google Drive
 
-Images must be uploaded to a specific Google Drive folder for the project. The script uses the Google Drive API to manage uploads and retrieve public URLs.
+Images and folders can be automatically uploaded to Google Drive using a dedicated script.
+
+#### 📤 Upload a local folder to Google Drive
+
+To upload a folder (and all its files/subfolders) to Google Drive:
+
+```bash
+npm run drive:upload-folder -- <local-folder-path> [<drive-parent-folder-id>]
+```
+
+Example to upload the `Twin_Peaks_S02E07` folder to the root of your Drive:
+
+```bash
+npm run drive:upload-folder -- Twin_Peaks_S02E07
+```
+
+Example to upload into a specific parent folder (replace the ID with your own):
+
+```bash
+npm run drive:upload-folder -- Twin_Peaks_S02E07 17zlEEp1KfYu1RczSGGq7iH5BoEzjR3FP
+```
+
+The script will create a folder with the same name on Drive and place all files and subfolders inside it.
+
+---
 
 #### 🗃️ Frame organization schema on Drive
 
